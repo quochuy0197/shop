@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'category'], function () {
+        Route::get('','CategoryController@getCate');
+        Route::post('','CategoryController@postCate');
+        Route::get('edit/{id}','CategoryController@editCate');
+        Route::post('edit/{id}','CategoryController@postEdit');
+        Route::get('delete/{id}','CategoryController@deleteCate');
+    });
 });
