@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\models\category;
 use App\Http\Requests\AddCateRequest;
 use App\Http\Requests\PostEditCategory;
@@ -15,9 +16,10 @@ class CategoryController extends Controller
 
     public function postCate(AddCateRequest $request){
         $category = new category;
+        $category->cate_id = $request->id;
         $category->cate_name = $request->name;
         $category->cate_slug = str_slug($request->name);
-        $category->save();
+        $category->save();  
         return back();
 
     }
@@ -27,16 +29,16 @@ class CategoryController extends Controller
         
         return view('backend.editcategory',$data);
     }
-    public function postEdit(PostEditCategory $request){
-        $category = new category;
+    public function postEdit(PostEditCategory $request,$cate_id){
+        $category = category::find($cate_id);
         $category->cate_name = $request->name;
         $category->cate_slug = str_slug($request->name);
         $category->save();
-        return back();
-
+        return redirect()->intended('admin/category');
     }
 
-    public function deleteCate(){
-        return view('backend.category');
+    public function deleteCate($cate_id){
+        category::destroy($cate_id);
+        return back();
     }
 }

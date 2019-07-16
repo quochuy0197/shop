@@ -22,7 +22,7 @@
 
 							<div class="form-group">
 								<label>Tên danh mục:</label>
-								<input type="text" name="name" class="form-control" placeholder="Tên danh mục...">
+								<input type="text" name="name" class="form-control" placeholder="Tên danh mục..." required>
 							</div>
 							<div class="form-group">
 								<input type="submit" name="submit " class="form-control btn btn-primary" value="Thêm mới" placeholder="Tên danh mục...">
@@ -40,21 +40,31 @@
 							<table class="table table-bordered">
 				              	<thead>
 					                <tr class="bg-primary">
+									<th>ID</th>
 					                  <th>Tên danh mục</th>
 									  <th style="width:30%">Tùy chọn</th>
 									  
 					                </tr>
 				              	</thead>
 				              	<tbody>
-									  @foreach ($catelist as $cate )
-									<tr>
+									  @forelse ($catelist as $cate)
+										  
+									  
+								  <tr class="post{{$cate->cate_id}}">
+								  		<td>{{$cate->cate_id}}</td>
 										<td>{{$cate->cate_name}}</td>
-										<td>
-										<a href="{{asset('admin/category/edit/'.$cate->cate_id)}}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Sửa</a>
-										<a href="{{asset('admin/category/delete/'.$cate->cate_id)}}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> Xóa</a>
-										</td>
+										<td>	  
+										
+										<a href="#" class="edit-modal btn btn-info btn-sm" data-id="{{$cate->cate_id}}" data-body="{{$cate->cate_name}}">
+												<i class="glyphicon glyphicon-pencil"></i>
+										</a>
+										<a href="#" class="delete-modal btn btn-info btn-sm" data-id="{{$cate->cate_id}}" data-body="{{$cate->cate_name}}">
+												<i class="glyphicon glyphicon-trash"></i>
+										</a>
 			                  		</tr>
-									  @endforeach
+									  @empty
+										  khong co dua lieu
+									  @endforelse	
 								
 				                </tbody>
 				            </table>
@@ -65,4 +75,74 @@
 			</div>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
+	<div id="create" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" role="form">
+						<div class="form-group row add">
+							<label class="control-label col-sm-2" for="name"> Ten danh muc</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="name" name="name" placeholder="ten danh muc" required>
+								<p class="error text-center alert alert-danger hidden"></p>
+							</div>
+						</div>
+					</form>
+				</div>
+					<div class="modal-footer">
+						<button class="btn btn-warning" type="submit" id="add" >
+							<span class="glyphicon glyphicon-plus"></span>Save
+						</button>
+						<button class="btn btn-warning" type="button" data-dismiss="modal"  >
+							<span class="glyphicon glyphicon-remobe"></span>Close
+						</button>
+					</div>
+			</div>
+		</div>
+	</div>
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"></h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="modal">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="id"> ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="fid" disabled>
+							
+						</div>
+					</div>
+					<div class="form-group">
+							<label class="control-label col-sm-2" for="name"> ten danh muc</label>
+							<div class="col-sm-10">
+								<input type="name" class="form-control" id="t" >
+								
+							</div>
+						</div>
+				</form>
+				<div class="deleteContent">
+						Are You sure want to delete <span class="title"></span>?
+						<span class="hidden id"></span>
+					  </div>
+					</div>
+					<div class="modal-footer">
+					  <button type="button" class="btn actionBtn" data-dismiss="modal">
+						<span id="footer_action_button" class="glyphicon"></span>
+					  </button>
+					  <button type="button" class="btn btn-warning" data-dismiss="modal">
+						<span class="glyphicon glyphicon"></span>close
+					  </button>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
 	@endsection

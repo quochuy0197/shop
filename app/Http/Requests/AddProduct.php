@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostEditCategory extends FormRequest
+class AddProduct extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,7 @@ class PostEditCategory extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'unique:category,cate_name',
-            $this->segment(4).',cate_id' 
-        ];
-    }
-    public function messages()
-    {
-        return[
-            'name.unique' => 'ten danh muc bi trung!'
+            
         ];
     }
 }

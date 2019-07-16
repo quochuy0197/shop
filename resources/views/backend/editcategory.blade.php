@@ -1,4 +1,4 @@
-@extends('backend.master.master')	
+{{-- @extends('backend.master.master')	
 @section('content')
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 		<div class="row">
@@ -14,8 +14,9 @@
 							Sửa danh mục
 						</div>
 						<div class="panel-body">
+						@include('errors.note')
 						<form method="POST">
-							@include('errors.note')
+							
 								
 							
 							<div class="form-group">
@@ -24,7 +25,7 @@
 							<input type="text" name="name" class="form-control" placeholder="Tên danh mục..." value={{$cate[0]->cate_name}}>
 							</div>
 							<div class="form-group">
-								<input type="submit" name="name" class="form-control btn btn-primary" placeholder="Tên danh mục..." value="Sửa">
+								<input type="submit" name="submit" class="form-control btn btn-primary" placeholder="Tên danh mục..." value="Sửa">
 							</div>
 							{{ csrf_field() }}
 						</form>
@@ -36,4 +37,4 @@
 			</div>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
-@endsection
+@endsection --}}
