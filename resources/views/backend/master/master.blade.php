@@ -10,6 +10,8 @@
 <link href="/assets/css/styles.css" rel="stylesheet">
 <script type="text/javascript" src="/assets/ckeditor/ckeditor.js"></script>
 <script src="/assets/js/lumino.glyphs.js"></script>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -43,73 +45,74 @@
   @yield('content')
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   	<script type="text/javascript">
-		$(document).on('click', '.edit-modal', function() {
-$('#footer_action_button').text(" Update Post");
-$('#footer_action_button').addClass('glyphicon-check');
-$('#footer_action_button').removeClass('glyphicon-trash');
-$('.actionBtn').addClass('btn-success');
-$('.actionBtn').removeClass('btn-danger');
-$('.actionBtn').addClass('edit');
-$('.modal-title').text('Post Edit');
-$('.deleteContent').hide();
-$('.form-horizontal').show();
-$('#fid').val($(this).data('id'));
-$('#t').val($(this).data('cate_name'));
+	$(document).on('click', '.edit-modal', function() {
+	$('#footer_action_button').text(" Update Post");
+	$('#footer_action_button').addClass('glyphicon-check');
+	$('#footer_action_button').removeClass('glyphicon-trash');
+	$('.actionBtn').addClass('btn-success');
+	$('.actionBtn').removeClass('btn-danger');
+	$('.actionBtn').addClass('edit');
+	$('.modal-title').text('Post Edit');
+	$('.deleteContent').hide();
+	$('.form-horizontal').show();
+	$('#fid').val($(this).data('id'));
+	$('#title').val($(this).data('title'));
 
-$('#myModal').modal('show');
-});
+	$('#myModal').modal('show');
+	});
 
-$('.modal-footer').on('click', '.edit', function() {
-  $.ajax({
-    type: 'POST',
-    url: 'editPost',
-    data: {
-'_token': $('input[name=_token]').val(),
-'id': $("#fid").val(),
-'title': $('#t').val(),
-    },
-success: function(data) {
-      $('.post' + data.id).replaceWith(" "+
-      "<tr class='post" + data.id + "'>"+
-      "<td>" + data.id + "</td>"+
-      "<td>" + data.name + "</td>"+
-      "<td>" + data.created_at + "</td>"+
- "<td><button class='show-modal btn btn-info btn-sm' data-id='" + data.id + "' data-name='" + data.name + "' data-body='" + data.body + "'><span class='fa fa-eye'></span></button> <button class='edit-modal btn btn-warning btn-sm' data-id='" + data.id + "' data-name='" + data.name + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-pencil'></span></button> <button class='delete-modal btn btn-danger btn-sm' data-id='" + data.id + "' data-name='" + data.name + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-trash'></span></button></td>"+
-      "</tr>");
-    }
-  });
-});
-$(document).on('click', '.delete-modal', function() {
-$('#footer_action_button').text(" Delete");
-$('#footer_action_button').removeClass('glyphicon-check');
-$('#footer_action_button').addClass('glyphicon-trash');
-$('.actionBtn').removeClass('btn-success');
-$('.actionBtn').addClass('btn-danger');
-$('.actionBtn').addClass('delete');
-$('.modal-title').text('Delete Post');
-$('.id').text($(this).data('id'));
-$('.deleteContent').show();
-$('.form-horizontal').hide();
-$('.title').html($(this).data('title'));
-$('#myModal').modal('show');
-});
+	$('.modal-footer').on('click', '.edit', function() {
+	$.ajax({
+		type: 'POST',
+		url: 'editPost',
+		data: {
+	'_token': $('input[name=_token]').val(),
+	'id': $("#fid").val(),
+	'title': $('#title').val(),
+		},
+	success: function(data) {
+		$('.post' + data.id).replaceWith(" "+
+		"<tr class='post" + data.id + "'>"+
+		"<td>" + data.id + "</td>"+
+		"<td>" + data.title + "</td>"+
+		"<td>" + data.created_at + "</td>"+
+	"<td><button class='show-modal btn btn-info btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='fa fa-eye'></span></button> <button class='edit-modal btn btn-warning btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-pencil'></span></button> <button class='delete-modal btn btn-danger btn-sm' data-id='" + data.id + "' data-title='" + data.title + "' data-body='" + data.body + "'><span class='glyphicon glyphicon-trash'></span></button></td>"+
+		"</tr>");
+		}
+	});
+	});
+	$(document).on('click', '.delete-modal', function() {
+	$('#footer_action_button').text(" Delete");
+	$('#footer_action_button').removeClass('glyphicon-check');
+	$('#footer_action_button').addClass('glyphicon-trash');
+	$('.actionBtn').removeClass('btn-success');
+	$('.actionBtn').addClass('btn-danger');
+	$('.actionBtn').addClass('delete');
+	$('.modal-title').text('Delete Post');
+	$('.id').text($(this).data('id'));
+	$('.deleteContent').show();
+	$('.form-horizontal').hide();
+	$('.title').html($(this).data('title'));
+	$('#myModal').modal('show');
+	});
 
-$('.modal-footer').on('click', '.delete', function(){
-  $.ajax({
-    type: 'POST',
-    url: 'admin/category/delete/{id}',
-    data: {
-      '_token': $('input[name=_token]').val(),
-      'id': $('.id').text()
-    },
-    success: function(data){
-       $('.post' + $('.id').text()).remove();
-    }
-  });
+	$('.modal-footer').on('click', '.delete', function(){
+	$.ajax({
+		type: 'POST',
+		url: 'admin/category/delete/{id}',
+		data: {
+		'_token': $('input[name=_token]').val(),
+		'id': $('.id').text()
+		},
+		success: function(data){
+		$('.post' + $('.id').text()).remove();
+		}
+	});
 });
 
 
 	</script>
+
 	<script src="/assets/js/jquery-1.11.1.min.js"></script>
 	<script src="/assets/js/bootstrap.min.js"></script>
 	<script src="/assets/js/chart.min.js"></script>
